@@ -22,10 +22,6 @@ class Milople_Rsp_Model_Observer extends Mage_Core_Model_Config_Data
 	*/
    public function AddToCartAfter(Varien_Event_Observer $observer)
    {
-	   if(Mage::app()->getStore()->getStoreId()==1){
-		   return;
-	   }
-	   
       $item = $observer->getQuoteItem();
       if ($item->getParentItem())
       {
@@ -79,10 +75,7 @@ class Milople_Rsp_Model_Observer extends Mage_Core_Model_Config_Data
                      $productId = $buyInfo->getProduct();
                      $types = Mage::getModel('rsp/terms')->load($termid);
                      $price = $types->getPrice();
-           			 
-           			 //$product_price = ($item->getProduct()->getSpecialPrice())?$item->getProduct()->getSpecialPrice():$item->getProduct()->getPrice();
-           			 $product_price = ($item->getProduct()->getSpecialPrice())?$item->getProduct()->getSpecialPrice():$item->getProduct()->getFinalPrice();
-           			 
+           			 $product_price = ($item->getProduct()->getSpecialPrice())?$item->getProduct()->getSpecialPrice():$item->getProduct()->getPrice();
 					 $custom_option_price = $item->getProduct()->getFinalPrice() - $item->getProduct()->getPrice();
                      /* Put condition for a case when special price is applied to product. */
                      if ($custom_option_price < 0)
